@@ -11,15 +11,13 @@ const WeatherCards = ({ weather,city}) => {
       {/* LEFT SECTION (30%) */}
       <div className=" w-full lg:w-[25%] flex flex-col gap-6">
         <TemperatureCard  data={weather} city={city}/>
-        <WindCard />
+        <WindCard data={weather}/>
       </div>
 
       {/* RIGHT SECTION (70%) */}
       <div className="w-full lg:w-[70%] flex flex-col gap-6">
-        {/* 7-Day Forecast */}
         <WeeklyForecast/>
 
-        {/* Grid below */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <AtmosphericCard />
           <SunCycleCard />

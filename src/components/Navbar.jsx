@@ -13,11 +13,9 @@ const Navbar = () => {
   return (
     <div className="bg-white shadow-md px-4 py-3 md:px-6 lg:px-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        {/* Logo */}
         <h1 className="text-xl md:text-2xl font-bold text-indigo-600">???</h1>
 
         <div className="flex flex-col md:flex-row gap-3 md:items-center w-full md:w-auto">
-          {/* Search Bar */}
           <input
             type="text"
             placeholder="Search location..."
