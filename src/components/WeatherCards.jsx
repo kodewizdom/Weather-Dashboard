@@ -5,12 +5,12 @@ import SunCycleCard from "./cards/SunCycleCard";
 import AirQualityCard from "./cards/AirQualityCard";
 import WeeklyForecast from "./cards/WeeklyForecast";
 
-const WeatherCards = () => {
+const WeatherCards = ({ weather,city}) => {
   return (
     <div className=" p-4 md:p-6 lg:p-8 flex flex-col lg:flex-row justify-between bg-[#F0F5FF]">
       {/* LEFT SECTION (30%) */}
       <div className=" w-full lg:w-[25%] flex flex-col gap-6">
-        <TemperatureCard />
+        <TemperatureCard  data={weather} city={city}/>
         <WindCard />
       </div>
 
