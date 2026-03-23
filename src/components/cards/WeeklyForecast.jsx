@@ -1,7 +1,7 @@
 import React from "react";
 import { getWeatherIcon } from "../../utils/weatherIcons";
 
-const WeeklyForecast = ({ data }) => {
+const WeeklyForecast = ({ data, unit}) => {
   const days = data?.daily?.time || [];
   const maxTemps = data?.daily?.temperature_2m_max || [];
   const minTemps = data?.daily?.temperature_2m_min || [];
@@ -19,13 +19,20 @@ const WeeklyForecast = ({ data }) => {
 
   const forecast = [];
 
+  const convertTemp = (temp)=>{
+    if(unit ==="F"){
+      return Math.round((temp*9)/5+32);
+    }
+    return Math.round(temp);
+  }
+
   for (let i = 0; i < days.length; i++) {
     if (!days[i] || maxTemps[i] == null || minTemps[i] == null) continue;
 
     const date = new Date(days[i]);
 
-    const max = Math.round(maxTemps[i]);
-    const min = Math.round(minTemps[i]);
+    const max = convertTemp(maxTemps[i]);
+    const min = convertTemp(minTemps[i]);
     const avg = Math.round((max + min) / 2);
 
     forecast.push({
@@ -69,7 +76,7 @@ const WeeklyForecast = ({ data }) => {
           </p>
 
           <p className="text-sm font-semibold mt-1">
-            {item.avg}°
+            {item.avg}°{unit}
           </p>
 
           {/* Min/Max */}

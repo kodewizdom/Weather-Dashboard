@@ -1,7 +1,7 @@
 import { MapPin } from "lucide-react";
 import { getWeatherIcon } from "../../utils/weatherIcons";
 
-const TemperatureCard = ({ data, city }) => {
+const TemperatureCard = ({ data, city,unit }) => {
   if (!data) {
   return (
     <div className="relative rounded-3xl p-6 md:p-8 min-h-[320px] text-white shadow-xl 
@@ -17,9 +17,15 @@ const TemperatureCard = ({ data, city }) => {
   );
 }
 
-  const temp = data?.current?.temperature_2m;
-  const min = data?.daily?.temperature_2m_min[0];
-  const max = data?.daily?.temperature_2m_max[0];
+  const convertTemp = (temp) => {
+  return unit === "F"
+    ? ((temp * 9) / 5 + 32).toFixed(1)
+    : temp.toFixed(1);
+};
+
+const temp = convertTemp(data.current.temperature_2m);
+const min = convertTemp(data.daily.temperature_2m_min[0]);
+const max = convertTemp(data.daily.temperature_2m_max[0]);
   const code = data?.current?.weather_code;
   const isDay = data?.current?.is_day === 1;
 
@@ -28,13 +34,13 @@ const TemperatureCard = ({ data, city }) => {
       className="relative rounded-3xl p-6 md:p-8 text-white shadow-xl overflow-visible 
     bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500"
     >
-      {/* Location */}
+      
       <div className="flex items-center gap-2 text-sm opacity-90">
         <MapPin />
         <span className="font-medium">{city || "Loading..."}</span>
       </div>
 
-      {/* Main Content */}
+      
       <div className="flex flex-col items-center justify-center mt-8">
         <div className="text-6xl mb-5">{getWeatherIcon(code, isDay, 64)}</div>
 
@@ -44,7 +50,7 @@ const TemperatureCard = ({ data, city }) => {
         </p> */}
 
         <p className="text-7xl font-bold leading-none mb-2 tracking-tight">
-          {temp}°
+          {temp}°{unit}
         </p>
 
         <p className="text-lg opacity-90 mb-6">Weather</p>
@@ -53,13 +59,13 @@ const TemperatureCard = ({ data, city }) => {
           <div className="flex items-center gap-2">
             <span className="opacity-70">Min</span>
             <div className="w-px h-4 bg-white/50"></div>
-            <span className="font-medium">{min}°C</span>
+            <span className="font-medium">{min}°{unit}</span>
           </div>
 
           <div className="flex items-center gap-2">
             <span className="opacity-70">Max</span>
             <div className="w-px h-4 bg-white/50"></div>
-            <span className="font-medium">{max}°C</span>
+            <span className="font-medium">{max}°{unit}</span>
           </div>
         </div>
       </div>

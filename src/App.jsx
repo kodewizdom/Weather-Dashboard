@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
+import Analytics from "./components/Analytics";
 import { fetchAirQuality, fetchCityName, fetchWeather } from "./services/weatherApi";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
   const [air, setAir] = useState(null);
+  const [unit, setUnit] = useState("C");
 
   useEffect(() => {
     if (!location) return;
@@ -59,8 +61,9 @@ function App() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Navbar />
-      <Dashboard weather={weather} city={city} air={air} />
+      <Navbar  unit={unit} setUnit={setUnit}/>
+      <Dashboard weather={weather} city={city} air={air} unit={unit} />
+      <Analytics weather={weather} air={air} unit={unit}/>
     </div>
   );
 }

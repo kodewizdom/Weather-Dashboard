@@ -1,7 +1,11 @@
+const WEATHER_API = import.meta.env.VITE_API_WEATHER;
+const AIR_API = import.meta.env.VITE_API_AIR;
+const GEO_API = import.meta.env.VITE_API_GEO;
+
 export const fetchWeather = async (lat, lon) => {
   try {
     const res = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,is_day,precipitation,uv_index&hourly=temperature_2m,relative_humidity_2m,precipitation,visibility,wind_speed_10m,pm10,pm2_5&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=auto`,
+      `${WEATHER_API}?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code,is_day,precipitation,uv_index&hourly=temperature_2m,relative_humidity_2m,precipitation,visibility,wind_speed_10m,pm10,pm2_5&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=auto`,
     );
 
     const data = await res.json();
@@ -15,7 +19,7 @@ export const fetchWeather = async (lat, lon) => {
 export const fetchCityName = async (lat, lon) => {
   try {
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+      `${GEO_API}?lat=${lat}&lon=${lon}&format=json`,
     );
 
     const data = await res.json();
@@ -35,7 +39,7 @@ export const fetchCityName = async (lat, lon) => {
 export const fetchAirQuality = async (lat, lon) => {
   try {
     const res = await fetch(
-      `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone`,
+      `${AIR_API}?latitude=${lat}&longitude=${lon}&current=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&hourly=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone&timezone=auto`,
     );
 
     const data = await res.json();
