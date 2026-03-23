@@ -1,40 +1,83 @@
 import React from "react";
+import { getWeatherIcon } from "../../utils/weatherIcons";
 
-const data = [
-  { day: "Sun", temp: "28°", icon: "⚡" },
-  { day: "Mon", temp: "17°", icon: "💧" },
-  { day: "Tue", temp: "20°", icon: "🌦️" },
-  { day: "Wed", temp: "29°", icon: "⛈️", active: true },
-  { day: "Thu", temp: "22°", icon: "🌬️" },
-  { day: "Fri", temp: "16°", icon: "🌥️" },
-  { day: "Sat", temp: "19°", icon: "🌧️" },
-];
+const WeeklyForecast = ({ data }) => {
+  const days = data?.daily?.time || [];
+  const maxTemps = data?.daily?.temperature_2m_max || [];
+  const minTemps = data?.daily?.temperature_2m_min || [];
+  const codes = data?.daily?.weather_code || [];
 
-const WeeklyForecast = () => {
+  if (!days.length) {
+    return <div className="p-4">Loading forecast...</div>;
+  }
+
+  
+  const todayStr = new Date().toLocaleDateString("en-CA");
+
+  let todayIndex = days.findIndex((d) => d === todayStr);
+  if (todayIndex === -1) todayIndex = 0;
+
+  const forecast = [];
+
+  for (let i = 0; i < days.length; i++) {
+    if (!days[i] || maxTemps[i] == null || minTemps[i] == null) continue;
+
+    const date = new Date(days[i]);
+
+    const max = Math.round(maxTemps[i]);
+    const min = Math.round(minTemps[i]);
+    const avg = Math.round((max + min) / 2);
+
+    forecast.push({
+      day: date.toLocaleDateString("en-US", { weekday: "short" }),
+      max,
+      min,
+      avg,
+      code: codes[i] ?? 0, 
+      isToday: i === todayIndex,
+    });
+  }
+
+  let sliced = forecast.slice(0, 7);
+
+  const centerIndex = 3;
+
+  let safety = 0;
+  while (!sliced[centerIndex]?.isToday && safety < 10) {
+    sliced.push(sliced.shift());
+    safety++;
+  }
+
   return (
-    <div className="flex justify-between gap-5 md:gap-0 overflow-x-auto pt-5 md:pt-0">
-
-      {data.map((item, index) => (
+    <div className="flex justify-between gap-5 md:gap-0 overflow-x-auto pt-5 md:pt-0 pb-1">
+      {sliced.map((item, index) => (
         <div
           key={index}
           className={`min-w-[95px] flex-shrink-0 rounded-2xl p-4 text-center shadow-sm transition
           ${
-            item.active
+            item.isToday
               ? "bg-gradient-to-br from-blue-400 to-indigo-500 text-white shadow-lg"
               : "bg-white text-gray-700"
           }`}
         >
-          {/* Icon */}
-          <div className="text-2xl mb-2">{item.icon}</div>
+          <div className="text-2xl mb-2">
+            {getWeatherIcon(item.code, true, 24)}
+          </div>
 
-          {/* Day */}
-          <p className="text-sm">{item.day}</p>
+          <p className="text-sm">
+            {item.isToday ? "Today" : item.day}
+          </p>
 
-          {/* Temp */}
-          <p className="text-sm font-semibold mt-1">{item.temp}</p>
+          <p className="text-sm font-semibold mt-1">
+            {item.avg}°
+          </p>
+
+          {/* Min/Max */}
+          {/* <p className="text-xs text-gray-400">
+            {item.min}° / {item.max}°
+          </p> */}
         </div>
       ))}
-
     </div>
   );
 };

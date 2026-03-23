@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import WeatherCards from "./components/WeatherCards";
-import { fetchCityName, fetchWeather } from "./services/weatherApi";
+import Dashboard from "./components/Dashboard";
+import { fetchAirQuality, fetchCityName, fetchWeather } from "./services/weatherApi";
 
 function App() {
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
+  const [air, setAir] = useState(null);
 
-useEffect(() => {
-  if (!location) return;
+  useEffect(() => {
+    if (!location) return;
 
-  const getCity = async () => {
-    const name = await fetchCityName(location.lat, location.lon);
-    console.log("CITY",name);
-    setCity(name);
-  };
+    const getCity = async () => {
+      const name = await fetchCityName(location.lat, location.lon);
+      setCity(name);
+    };
 
-  getCity();
-}, [location]);
+    getCity();
+  }, [location]);
 
-  // 1. Get GPS location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -31,11 +30,10 @@ useEffect(() => {
       },
       (err) => {
         console.error("Location error:", err);
-      }
+      },
     );
   }, []);
 
-  // 2. Fetch weather after location
   useEffect(() => {
     if (!location) return;
 
@@ -47,12 +45,22 @@ useEffect(() => {
     getWeather();
   }, [location]);
 
-  console.log(weather);
+  useEffect(() => {
+  if (!location) return;
+
+  const getAir = async () => {
+    const data = await fetchAirQuality(location.lat, location.lon);
+    setAir(data);
+  };
+
+  getAir();
+}, [location]);
+
 
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <WeatherCards weather={weather} city={city}/>
+      <Dashboard weather={weather} city={city} air={air} />
     </div>
   );
 }

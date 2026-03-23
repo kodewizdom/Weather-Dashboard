@@ -4,9 +4,8 @@ const Navbar = () => {
   const [unit, setUnit] = useState("C");
 
   const getTodayDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
+  return new Date().toLocaleDateString("en-CA");
+};
 
   const [selectedDate, setSelectedDate] = useState(getTodayDate());
 

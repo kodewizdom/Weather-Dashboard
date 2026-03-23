@@ -5,28 +5,28 @@ import SunCycleCard from "./cards/SunCycleCard";
 import AirQualityCard from "./cards/AirQualityCard";
 import WeeklyForecast from "./cards/WeeklyForecast";
 
-const WeatherCards = ({ weather,city}) => {
+const Dashboard = ({ weather,city,air}) => {
   return (
     <div className=" p-4 md:p-6 lg:p-8 flex flex-col lg:flex-row justify-between bg-[#F0F5FF]">
-      {/* LEFT SECTION (30%) */}
+      {/* LEFT SECTION */}
       <div className=" w-full lg:w-[25%] flex flex-col gap-6">
         <TemperatureCard  data={weather} city={city}/>
         <WindCard data={weather}/>
       </div>
 
-      {/* RIGHT SECTION (70%) */}
-      <div className="w-full lg:w-[70%] flex flex-col gap-6">
-        <WeeklyForecast/>
+      {/* RIGHT SECTION */}
+      <div className="w-full lg:w-[72%] flex flex-col gap-6">
+        <WeeklyForecast data={weather}/>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <AtmosphericCard />
-          <SunCycleCard />
+          <AtmosphericCard data={weather}/>
+          <SunCycleCard data={weather} city={city}/>
         </div>
 
-        <AirQualityCard />
+        <AirQualityCard data={air} city={city}/>
       </div>
     </div>
   );
 };
 
-export default WeatherCards;
+export default Dashboard;
