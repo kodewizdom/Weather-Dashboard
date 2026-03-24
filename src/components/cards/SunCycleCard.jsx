@@ -1,5 +1,4 @@
 import { MapPin, Moon, Sun } from "lucide-react";
-import React from "react";
 
 const SunCycleCard = ({ data, city }) => {
   const sunriseRaw = data?.daily?.sunrise?.[0];
@@ -20,44 +19,40 @@ const SunCycleCard = ({ data, city }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition p-5">
-
       <h2 className="text-gray-500 text-sm mb-4">
         Sunrise & Sunset
       </h2>
 
-      
       <div className="bg-orange-50 rounded-xl p-4">
-
-        
+        {/* location */}
         <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-          <MapPin/> <span >{city || "--"}</span>
+          <MapPin size={16} />
+          <span>{city || "—"}</span>
         </div>
 
         
         <div className="flex justify-between items-center">
-
-          
+          {/* sunrise */}
           <div className="flex items-center gap-3">
-            <div className="text-2xl"><Sun /></div>
+            <Sun size={22} />
             <div>
               <p className="text-xs text-gray-400">Sunrise</p>
-              <p className="text-sm font-semibold text-blue-500">
+              <p className="text-sm font-semibold text-gray-800">
                 {sunrise}
               </p>
             </div>
           </div>
 
-          
+          {/* sunset */}
           <div className="flex items-center gap-3">
-            <div className="text-2xl"><Moon/></div>
+            <Moon size={22} />
             <div>
               <p className="text-xs text-gray-400">Sunset</p>
-              <p className="text-sm font-semibold text-blue-500">
+              <p className="text-sm font-semibold text-gray-800">
                 {sunset}
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -1,12 +1,77 @@
-# React + Vite
+# Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based weather dashboard that shows current weather, hourly analytics, and historical trends using Open-Meteo APIs.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Demo
 
-## Expanding the ESLint configuration
+[Visit Weather Dashboard](https://weatherdashboard-sajid.netlify.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Preview
+
+![1774375097899](public/1774375097899.png)
+
+---
+
+## Features
+
+- Current weather (temperature, humidity, wind)
+- 7-day forecast with centered current day
+- Hourly charts for temperature, humidity, precipitation, etc.
+- Historical data (temperature, wind, rainfall, air quality)
+- AQI calculation based on PM2.5
+- Unit conversion (°C / °F)
+
+---
+
+## Tech Stack
+
+- React (Vite)
+- Tailwind CSS
+- Recharts
+- Lucide Icons
+
+---
+
+## Setup
+
+Clone the repository:
+
+```bash
+git clone <your-repo-link>
+cd weather-dashboard
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the root
+
+APIs are from: [https://open-meteo.com/](https://open-meteo.com/)
+
+---
+
+## Run
+
+```bash
+npm run dev
+```
+
+Open: [http://localhost:5173](http://localhost:5173/)
+
+---
+
+## Notes
+
+- Uses Open-Meteo (no API key required)
+- Focus on clean UI and data handling

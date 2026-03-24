@@ -1,6 +1,47 @@
-import {LineChart,Line,XAxis,YAxis,Tooltip,ResponsiveContainer,} from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-const LineChartCard = ({ data, dataKey, color, title,unit}) => {
+const formatValue = (key, value, unit) => {
+  switch (key) {
+    case "temp":
+      return `${value}°${unit}`;
+    case "humidity":
+      return `${value}%`;
+    case "precipitation":
+      return `${value} mm`;
+    case "visibility":
+      return `${value} km`;
+    case "wind":
+      return `${value} km/h`;
+    default:
+      return value;
+  }
+};
+
+const LineChartCard = ({
+  data = [],
+  dataKey,
+  color = "#4f46e5",
+  title,
+  unit,
+}) => {
+  if (!data.length) {
+    return (
+      <div className="bg-white rounded-2xl p-5 shadow-sm">
+        <h2 className="text-sm text-gray-500 mb-4">{title}</h2>
+        <div className="h-64 flex items-center justify-center text-gray-400 text-sm">
+          No data available
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm">
       <h2 className="text-sm text-gray-500 mb-4">{title}</h2>
@@ -8,30 +49,30 @@ const LineChartCard = ({ data, dataKey, color, title,unit}) => {
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
-            <YAxis />
+            <XAxis
+              dataKey="time"
+              tick={{ fontSize: 10 }}
+              stroke="#9ca3af"
+            />
+            <YAxis stroke="#9ca3af" />
 
-            
             <Tooltip
-              formatter={(value) => {
-                if (dataKey === "temp") return `${value}°${unit}`;
-                if (dataKey === "humidity") return `${value}%`;
-                if (dataKey === "precipitation") return `${value} mm`;
-                if (dataKey === "visibility") return `${value} km`;
-                if (dataKey === "wind") return `${value} km/h`;
-                return value;
+              contentStyle={{
+                borderRadius: "10px",
+                border: "none",
+                fontSize: "12px",
               }}
+              formatter={(value) => formatValue(dataKey, value, unit)}
             />
 
-            
             <Line
               type="monotone"
               dataKey={dataKey}
               name={title}
               stroke={color}
               strokeWidth={2}
-              dot={{ r: 3 }}
-              activeDot={{ r: 6 }}
+              dot={true}              
+              activeDot={{ r: 5 }}
             />
           </LineChart>
         </ResponsiveContainer>

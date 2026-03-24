@@ -8,7 +8,22 @@ import {
   Legend,
 } from "recharts";
 
-const TempTrendChart = ({ data, unit }) => {
+const TempTrendChart = ({ data = [], unit }) => {
+  if (!data.length) {
+    return (
+      <div className="bg-white rounded-2xl p-5 shadow-sm">
+        <h2 className="text-sm text-gray-500 mb-4">
+          Temperature Trend (Monthly)
+        </h2>
+        <div className="h-80 flex items-center justify-center text-gray-400 text-sm">
+          No data available
+        </div>
+      </div>
+    );
+  }
+
+  const formatTooltip = (value) => `${value}°${unit}`;
+
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm">
       <h2 className="text-sm text-gray-500 mb-4">
@@ -16,21 +31,53 @@ const TempTrendChart = ({ data, unit }) => {
       </h2>
 
       <div className="h-80 overflow-x-auto">
-        <div className="min-w-175 h-full">
+        <div className="min-w-[700px] h-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
-              <XAxis dataKey="month" />
-              <YAxis />
+              <XAxis
+                dataKey="month"
+                stroke="#9ca3af"
+                tick={{ fontSize: 11 }}
+              />
+              <YAxis stroke="#9ca3af" />
 
               <Tooltip
-                formatter={(value) => `${value}°${unit}`}
+                formatter={formatTooltip}
+                contentStyle={{
+                  borderRadius: "10px",
+                  border: "none",
+                  fontSize: "12px",
+                }}
               />
 
-              <Legend/>
+              <Legend wrapperStyle={{ fontSize: "12px" }} />
 
-              <Line dataKey="min" stroke="#3b82f6" dot={false} />
-              <Line dataKey="max" stroke="#ef4444" dot={false} />
-              <Line dataKey="mean" stroke="#10b981" dot={false} />
+              <Line
+                type="monotone"
+                dataKey="min"
+                name="Min"
+                stroke="#3b82f6"
+                strokeWidth={2}
+                dot={false}
+              />
+
+              <Line
+                type="monotone"
+                dataKey="max"
+                name="Max"
+                stroke="#ef4444"
+                strokeWidth={2}
+                dot={false}
+              />
+
+              <Line
+                type="monotone"
+                dataKey="mean"
+                name="Avg"
+                stroke="#10b981"
+                strokeWidth={2}
+                dot={false}
+              />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -40,4 +87,3 @@ const TempTrendChart = ({ data, unit }) => {
 };
 
 export default TempTrendChart;
-
