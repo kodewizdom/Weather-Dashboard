@@ -4,8 +4,8 @@ import { getWeatherIcon } from "../../utils/weatherIcons";
 const TemperatureCard = ({ data, city,unit }) => {
   if (!data) {
   return (
-    <div className="relative rounded-3xl p-6 md:p-8 min-h-[320px] text-white shadow-xl 
-    bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500 flex flex-col justify-center items-center gap-4 animate-pulse">
+    <div className="relative rounded-3xl p-6 md:p-8 min-h-80 text-white shadow-xl 
+    bg-linear-to-br from-blue-400 via-blue-500 to-indigo-500 flex flex-col justify-center items-center gap-4 animate-pulse">
 
       <div className="w-12 h-12 bg-white/30 rounded-full"></div>
 
@@ -32,7 +32,7 @@ const max = convertTemp(data.daily.temperature_2m_max[0]);
   return (
     <div
       className="relative rounded-3xl p-6 md:p-8 text-white shadow-xl overflow-visible 
-    bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-500"
+    bg-linear-to-br from-blue-400 via-blue-500 to-indigo-500"
     >
       
       <div className="flex items-center gap-2 text-sm opacity-90">

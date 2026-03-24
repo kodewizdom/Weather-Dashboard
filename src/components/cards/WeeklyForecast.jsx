@@ -8,8 +8,26 @@ const WeeklyForecast = ({ data, unit}) => {
   const codes = data?.daily?.weather_code || [];
 
   if (!days.length) {
-    return <div className="p-4">Loading forecast...</div>;
-  }
+  return (
+    <div className="flex justify-between gap-5 md:gap-0 overflow-x-auto pt-5 md:pt-0 pb-1">
+      {[...Array(7)].map((_, index) => (
+        <div
+          key={index}
+          className="min-w-23.75 shrink-0 rounded-2xl p-4 text-center shadow-sm bg-gray-200 animate-pulse"
+        >
+          {/* Icon placeholder */}
+          <div className="w-6 h-6 bg-gray-300 rounded-full mx-auto mb-2"></div>
+
+          {/* Day text */}
+          <div className="h-3 bg-gray-300 rounded w-10 mx-auto mb-2"></div>
+
+          {/* Temp */}
+          <div className="h-4 bg-gray-300 rounded w-8 mx-auto"></div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
   
   const todayStr = new Date().toLocaleDateString("en-CA");
@@ -60,10 +78,10 @@ const WeeklyForecast = ({ data, unit}) => {
       {sliced.map((item, index) => (
         <div
           key={index}
-          className={`min-w-[95px] flex-shrink-0 rounded-2xl p-4 text-center shadow-sm transition
+          className={`min-w-23.75 shrink-0 rounded-2xl p-4 text-center shadow-sm transition
           ${
             item.isToday
-              ? "bg-gradient-to-br from-blue-400 to-indigo-500 text-white shadow-lg"
+              ? "bg-linear-to-br from-blue-400 to-indigo-500 text-white shadow-lg"
               : "bg-white text-gray-700"
           }`}
         >

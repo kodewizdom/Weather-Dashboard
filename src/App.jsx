@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 import Analytics from "./components/Analytics";
 import { fetchAirQuality, fetchCityName, fetchWeather } from "./services/weatherApi";
+import Historical from "./components/Historical";
 
 function App() {
   const [location, setLocation] = useState(null);
@@ -64,6 +65,7 @@ function App() {
       <Navbar  unit={unit} setUnit={setUnit}/>
       <Dashboard weather={weather} city={city} air={air} unit={unit} />
       <Analytics weather={weather} air={air} unit={unit}/>
+      <Historical location={location} unit={unit}/>
     </div>
   );
 }
